@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .header-image {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.2));
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 28px;
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .radio-option,
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .radio-option label,
+        .checkbox-option label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-reset {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #e0e0e0;
+        }
+
+        .btn-reset:hover {
+            background: #efefef;
+            border-color: #d0d0d0;
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .response-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .response-box h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .response-box pre {
+            color: #666;
+            font-size: 13px;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        @media (max-width: 500px) {
+            .card {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 22px;
+                margin-bottom: 20px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .radio-group,
+            .checkbox-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header-section">
+                <img src="images/student.png" alt="Student Icon" class="header-image">
+                <h1>📚 Student Registration</h1>
+            </div>
+
+            <div class="success-message" id="successMsg">
+                ✓ Form submitted successfully!
+            </div>
+
+            <form id="registrationForm" method="GET" action="/process_get">
+                <!-- Name Field -->
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                    <div class="error-message" id="nameError">Name is required</div>
+                </div>
+
+                <!-- Contact Field -->
+                <div class="form-group">
+                    <label for="contact">Contact Number *</label>
+                    <input type="tel" id="contact" name="contact" required placeholder="Enter your contact number">
+                    <div class="error-message" id="contactError">Contact number is required</div>
+                </div>
+
+                <!-- Gender Field -->
+                <div class="form-group">
+                    <label>Gender *</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="male" name="gender" value="Male" required>
+                            <label for="male">Male</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="female" name="gender" value="Female" required>
+                            <label for="female">Female</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="other" name="gender" value="Other" required>
+                            <label for="other">Other</label>
+                        </div>
+                    </div>
+                    <div class="error-message" id="genderError">Please select a gender</div>
+                </div>
+
+                <!-- Address Field -->
+                <div class="form-group">
+                    <label for="address">Address *</label>
+                    <textarea id="address" name="address" required placeholder="Enter your address"></textarea>
+                    <div class="error-message" id="addressError">Address is required</div>
+                </div>
+
+                <!-- Hobbies Field -->
+                <div class="form-group">
+                    <label>Hobbies</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="reading" name="hobbies" value="Reading">
+                            <label for="reading">Reading</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="sports" name="hobbies" value="Sports">
+                            <label for="sports">Sports</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="music" name="hobbies" value="Music">
+                            <label for="music">Music</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="coding" name="hobbies" value="Coding">
+                            <label for="coding">Coding</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="gaming" name="hobbies" value="Gaming">
+                            <label for="gaming">Gaming</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skillset Field -->
+                <div class="form-group">
+                    <label for="skillset">Skillset *</label>
+                    <select id="skillset" name="skillset" required>
+                        <option value="">-- Select a Skillset --</option>
+                        <option value="Frontend">Frontend Development</option>
+                        <option value="Backend">Backend Development</option>
+                        <option value="Full-Stack">Full-Stack Development</option>
+                        <option value="Data-Science">Data Science</option>
+                        <option value="DevOps">DevOps</option>
+                        <option value="Mobile">Mobile Development</option>
+                        <option value="UI-UX">UI/UX Design</option>
+                    </select>
+                    <div class="error-message" id="skillsetError">Please select a skillset</div>
+                </div>
+
+                <!-- Highest Qualification Field -->
+                <div class="form-group">
+                    <label for="qualification">Highest Qualification *</label>
+                    <select id="qualification" name="qualification" required>
+                        <option value="">-- Select Qualification --</option>
+                        <option value="10th">10th Pass</option>
+                        <option value="12th">12th Pass</option>
+                        <option value="Diploma">Diploma</option>
+                        <option value="Bachelor">Bachelor's Degree</option>
+                        <option value="Master">Master's Degree</option>
+                        <option value="PhD">PhD</option>
+                    </select>
+                    <div class="error-message" id="qualificationError">Please select qualification</div>
+                </div>
+
+                <!-- District Field -->
+                <div class="form-group">
+                    <label for="district">District *</label>
+                    <select id="district" name="district" required>
+                        <option value="">-- Select District --</option>
+                        <option value="Ahmednagar">Ahmednagar</option>
+                        <option value="Akola">Akola</option>
+                        <option value="Amravati">Amravati</option>
+                        <option value="Aurangabad">Aurangabad</option>
+                        <option value="Beed">Beed</option>
+                        <option value="Bhandara">Bhandara</option>
+                        <option value="Buldhana">Buldhana</option>
+                        <option value="Chandrapur">Chandrapur</option>
+                        <option value="Dhule">Dhule</option>
+                        <option value="Gadchiroli">Gadchiroli</option>
+                        <option value="Gondia">Gondia</option>
+                        <option value="Hingoli">Hingoli</option>
+                        <option value="Jalgaon">Jalgaon</option>
+                        <option value="Jalna">Jalna</option>
+                        <option value="Kolhapur">Kolhapur</option>
+                        <option value="Latur">Latur</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Nagpur">Nagpur</option>
+                        <option value="Nanded">Nanded</option>
+                        <option value="Nandurbar">Nandurbar</option>
+                        <option value="Nashik">Nashik</option>
+                        <option value="Navi Mumbai">Navi Mumbai</option>
+                        <option value="Osmanabd">Osmanabd</option>
+                        <option value="Palghar">Palghar</option>
+                        <option value="Parbhani">Parbhani</option>
+                        <option value="Pune">Pune</option>
+                        <option value="Raigad">Raigad</option>
+                        <option value="Ratnagiri">Ratnagiri</option>
+                        <option value="Sangli">Sangli</option>
+                        <option value="Satara">Satara</option>
+                        <option value="Sindhudurg">Sindhudurg</option>
+                        <option value="Solapur">Solapur</option>
+                        <option value="Thane">Thane</option>
+                        <option value="Wardha">Wardha</option>
+                        <option value="Washim">Washim</option>
+                        <option value="Yavatmal">Yavatmal</option>
+                    </select>
+                    <div class="error-message" id="districtError">Please select a district</div>
+                </div>
+
+                <!-- Button Group -->
+                <div class="button-group">
+                    <button type="submit" class="btn-submit">Submit</button>
+                    <button type="reset" class="btn-reset">Reset</button>
+                </div>
+            </form>
+
+            <!-- Response Display -->
+            <div class="response-box" id="responseBox">
+                <h3>Response Data:</h3>
+                <pre id="responseContent"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('registrationForm');
+        const responseBox = document.getElementById('responseBox');
+        const responseContent = document.getElementById('responseContent');
+        const successMsg = document.getElementById('successMsg');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Hide previous response and success message
+            responseBox.style.display = 'none';
+            successMsg.style.display = 'none';
+
+            // Get all form values
+            const formData = new FormData(form);
+            const data = {};
+
+            // Collect regular form fields
+            for (let [key, value] of formData.entries()) {
+                if (key === 'hobbies') {
+                    if (!data.hobbies) data.hobbies = [];
+                    data.hobbies.push(value);
+                } else {
+                    data[key] = value;
+                }
+            }
+
+            // Ensure hobbies is always an array (empty if none selected)
+            if (!data.hobbies) data.hobbies = [];
+
+            try {
+                // Make GET request with query parameters
+                const queryString = new URLSearchParams();
+                queryString.append('name', data.name || '');
+                queryString.append('contact', data.contact || '');
+                queryString.append('gender', data.gender || '');
+                queryString.append('address', data.address || '');
+                queryString.append('hobbies', data.hobbies.join(', '));
+                queryString.append('skillset', data.skillset || '');
+                queryString.append('qualification', data.qualification || '');
+                queryString.append('district', data.district || '');
+
+                const response = await fetch('/process_get?' + queryString.toString());
+                const result = await response.json();
+
+                // Display response
+                responseContent.textContent = JSON.stringify(result, null, 2);
+                responseBox.style.display = 'block';
+                successMsg.style.display = 'block';
+
+                // Scroll to response
+                responseBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } catch (error) {
+                console.error('Error:', error);
+                responseContent.textContent = 'Error: ' + error.message;
+                responseBox.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
